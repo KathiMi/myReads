@@ -8,7 +8,7 @@ const SearchResult = (props) => {
       {props.books !== [] && (
         <ol className="books-grid">
           {props.books.map((book) => (
-            <Book book={book} />
+            <Book key={book.id} book={book} />
           ))}
         </ol>
       )}
