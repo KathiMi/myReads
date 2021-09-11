@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import ShelfChanger from "./ShelfChanger";
 
 const Book = (props) => {
-  const { book } = props;
+  const { book, onShelfChange } = props;
   return (
     <li key={book.id}>
       <div className="book">
@@ -18,7 +18,11 @@ const Book = (props) => {
               }}
             />
           )}
-          <ShelfChanger />
+          <ShelfChanger
+            selectedValue={book.shelf}
+            bookId={book.id}
+            onShelfChange={onShelfChange}
+          />
         </div>
         {book.title && <div className="book-title">{book.title}</div>}
         {book.authors &&
@@ -34,6 +38,7 @@ const Book = (props) => {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
+  onShelfChange: PropTypes.func,
 };
 
 export default Book;

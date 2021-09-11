@@ -1,29 +1,40 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import BookShelf from "./BookShelf";
-import { getAll } from "../BooksAPI";
+import { getAll, update } from "../BooksAPI";
 
 class MyReads extends Component {
   state = {
-    currentlyReadingBooks: [],
-    wantToReadBooks: [],
-    readBooks: [],
+    booksInMyReads: [],
   };
 
   componentDidMount() {
-    getAll().then((result) => {
+    getAll().then((bookList) => {
       this.setState(() => ({
-        currentlyReadingBooks: result.filter(
-          (book) => book.shelf === "currentlyReading"
-        ),
-        wantToReadBooks: result.filter((book) => book.shelf === "wantToRead"),
-        readBooks: result.filter((book) => book.shelf === "read"),
+        booksInMyReads: bookList,
       }));
     });
   }
 
+  onShelfChange = (bookId, shelf) => {
+    const { booksInMyReads } = this.state;
+    this.setState(() => ({
+      booksInMyReads: booksInMyReads.map((book) =>
+        book.id === bookId ? { ...book, shelf: shelf } : book
+      ),
+    }));
+    update(booksInMyReads.find((book) => book.id === bookId), shelf);
+  };
+
   render() {
-    const { currentlyReadingBooks, wantToReadBooks, readBooks } = this.state;
+    const { booksInMyReads } = this.state;
+    const currentlyReading = booksInMyReads.filter(
+      (book) => book.shelf === "currentlyReading"
+    );
+    const wantToRead = booksInMyReads.filter(
+      (book) => book.shelf === "wantToRead"
+    );
+    const read = booksInMyReads.filter((book) => book.shelf === "read");
 
     return (
       <div className="list-books">
@@ -33,10 +44,19 @@ class MyReads extends Component {
         <div className="list-books-content">
           <BookShelf
             bookShelfName="Currently Reading"
-            books={currentlyReadingBooks}
+            books={currentlyReading}
+            onShelfChange={this.onShelfChange}
           />
-          <BookShelf bookShelfName="Want to Read" books={wantToReadBooks} />
-          <BookShelf bookShelfName="Read" books={readBooks} />
+          <BookShelf
+            bookShelfName="Want to Read"
+            books={wantToRead}
+            onShelfChange={this.onShelfChange}
+          />
+          <BookShelf
+            bookShelfName="Read"
+            books={read}
+            onShelfChange={this.onShelfChange}
+          />
         </div>
         <Link to="/search">
           <div className="open-search">
