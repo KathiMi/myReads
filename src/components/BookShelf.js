@@ -25,7 +25,7 @@ const BookShelf = (props) => {
 BookShelf.propTypes = {
   bookShelfName: PropTypes.string.isRequired,
   books: PropTypes.array.isRequired,
-  onShelfChange: PropTypes.func,
+  onShelfChange: PropTypes.func.isRequired,
 };
 
 export default BookShelf;

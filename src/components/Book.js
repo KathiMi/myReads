@@ -20,7 +20,7 @@ const Book = (props) => {
           )}
           <ShelfChanger
             selectedValue={book.shelf}
-            bookId={book.id}
+            book={book}
             onShelfChange={onShelfChange}
           />
         </div>
@@ -38,7 +38,7 @@ const Book = (props) => {
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  onShelfChange: PropTypes.func,
+  onShelfChange: PropTypes.func.isRequired,
 };
 
 export default Book;

@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import Book from "./Book";
 
 const SearchResult = (props) => {
+  const { books, onShelfChange } = props;
   return (
     <div className="search-books-results">
-      {props.books !== [] && (
+      {books !== [] && (
         <ol className="books-grid">
-          {props.books.map((book) => (
-            <Book key={book.id} book={book} />
+          {books.map((book) => (
+            <Book key={book.id} book={book} onShelfChange={onShelfChange} />
           ))}
         </ol>
       )}
@@ -18,6 +19,7 @@ const SearchResult = (props) => {
 
 SearchResult.propTypes = {
   books: PropTypes.array.isRequired,
+  onShelfChange: PropTypes.func.isRequired,
 };
 
 export default SearchResult;

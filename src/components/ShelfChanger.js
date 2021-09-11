@@ -2,13 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const ShelfChanger = (props) => {
-  const { selectedValue, bookId, onShelfChange } = props;
+  const { selectedValue, book, onShelfChange } = props;
 
   return (
     <div className="book-shelf-changer">
       <select
         defaultValue={selectedValue || "none"}
-        onChange={(event) => onShelfChange(bookId, event.target.value)}
+        onChange={(event) => onShelfChange(book, event.target.value)}
       >
         <option value="move" disabled>
           Move to...
@@ -24,8 +24,8 @@ const ShelfChanger = (props) => {
 
 ShelfChanger.propTypes = {
   selectedValue: PropTypes.string,
-  bookId: PropTypes.string.isRequired,
-  onShelfChange: PropTypes.func,
+  book: PropTypes.object.isRequired,
+  onShelfChange: PropTypes.func.isRequired,
 };
 
 export default ShelfChanger;
