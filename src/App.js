@@ -23,13 +23,21 @@ class BooksApp extends React.Component {
     update(changingBook, shelf);
   };
 
+  /* 
+  Sorry for the mess in the following function - couldn't get head around a better solution.
+  Suggestions for improvement are very welcome :)
+  */
+
   updateBooksOnShelves(changingBook, shelf) {
     this.setState((curState) => ({
-      booksOnShelves: curState.booksOnShelves.includes(changingBook)
-        ? curState.booksOnShelves.map((book) =>
-            book.id === changingBook.id ? { ...book, shelf: shelf } : book
-          )
-        : [...curState.booksOnShelves, { ...changingBook, shelf: shelf }],
+      booksOnShelves:
+        curState.booksOnShelves.filter(
+          (bookOnShelves) => bookOnShelves.id === changingBook.id
+        ).length > 0
+          ? curState.booksOnShelves.map((book) =>
+              book.id === changingBook.id ? { ...book, shelf: shelf } : book
+            )
+          : [...curState.booksOnShelves, { ...changingBook, shelf: shelf }],
     }));
   }
 

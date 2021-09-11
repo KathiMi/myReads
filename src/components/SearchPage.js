@@ -19,7 +19,17 @@ class SearchPage extends Component {
     }));
   };
 
-  mergeBooks = (booksOnShelves, searchedBooks) => searchedBooks;
+  /* For this method I got some inspiration from 
+  https://stackoverflow.com/questions/46849286/merge-two-array-of-objects-based-on-a-key 
+  :) */
+
+  mergeBooks = (booksOnShelves, searchedBooks) =>
+    searchedBooks.map((searchedBook) => ({
+      ...booksOnShelves.find(
+        (bookOnShelves) => bookOnShelves.id === searchedBook.id && bookOnShelves
+      ),
+      ...searchedBook,
+    }));
 
   render() {
     const { searchedBooks } = this.state;
